@@ -1,0 +1,46 @@
+def main.main():
+    let t0 = newchan main.main0.t0_chan0, 0;
+    let t1 = newchan main.main0.t1_chan0, 0;
+    let t2 = newchan main.main0.t2_chan0, 0;
+    spawn main.philo(t0, t1);
+    spawn main.philo(t2, t0);
+    spawn main.philo(t1, t2);
+    spawn main.aFork(t0);
+    spawn main.aFork(t1);
+    spawn main.aFork(t2);
+def main.philo(left, right):
+    call main.philo#1(left, right);
+def main.philo#1(left, right):
+    select
+      case recv right; call main.philo#2(left, right); 
+      case recv left; call main.philo#6(left, right); 
+    endselect;
+def main.philo#2(left, right):
+    select
+      case recv left; call main.philo#4(left, right); 
+      case tau; call main.philo#5(); 
+    endselect;
+def main.philo#4(left, right):
+    send left;
+    send right;
+    call main.philo#1(left, right);
+def main.philo#5(left, right):
+    send right;
+    call main.philo#1(left, right);
+def main.philo#6(left, right):
+    select
+      case recv right; call main.philo#8(left, right); 
+      case tau; call main.philo#9(); 
+    endselect;
+def main.philo#8(left, right):
+    send left;
+    send right;
+    call main.philo#1(left, right);
+def main.philo#9(left, right):
+    send left;
+    call main.philo#1(left, right);
+def main.aFork(fork):
+    call main.aFork#1(fork);
+def main.aFork#1(fork):
+    call main.aFork#1(fork);
+
