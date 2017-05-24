@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='https://fonts.googleapis.com/css?family=Fira+Mono|Roboto:100,400' rel='stylesheet'/>
+  <link href="/static/fontcustom.css" rel="stylesheet" />
   <link href="/static/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -16,9 +17,9 @@
   </div>
   </div>
   <div class='controls'>
-    <button name='cfsm' id='cfsm'>Show CFSM</button>
-    <button name='migo' id='migo'>Show MiGoType</button>
-    <button name='migoinfer' id='migoinfer'>Show MiGoType v2</button>
+    <!--<button name='cfsm' id='cfsm'>Show CFSM</button>
+    <button name='migo' id='migo'>Show MiGoType</button>-->
+    <button name='migoinfer' id='migoinfer'>Show MiGo Type</button>
     <button name='ssa' id='ssa'>Show SSA</button>
     {{- if .Examples -}}
     <select name='example' id='examples' class='left'>
@@ -31,10 +32,10 @@
   <div class='generated'>
     <div class='code' id='out' spellcheck='false' contenteditable='false'>No output.</div>
     <div class='buttons'>
-        <button name='godel' id='godel'>Model check</button>
-        <button name='godel-term' id='godel-term'>Termination check</button>
-        <button name='gong' id='gong'>Run Gong</button>
-        <button name='synthesis' id='synthesis'>Run Synthesis</button> <input name='chan-cfsm' id='chan-cfsm' value='1' placeholder='Chan CFSMs'/>
+        <button name='godel' id='godel'>Model check <i class="fa fa-docker"></i></button>
+        <button name='godel-term' id='godel-term'>Termination check <i class="fa fa-docker"></i></button>
+        <!--<button name='gong' id='gong'>Run Gong</button>
+        <button name='synthesis' id='synthesis'>Run Synthesis</button> <input name='chan-cfsm' id='chan-cfsm' value='1' placeholder='Chan CFSMs'/>-->
     </div>
     <div id='gong-wrap'><div id='gong-output'></div><div class='buttons'><button id='gong-output-close'>Close</button></div></div>
     <div id='godel-wrap'><div id='godel-output'></div><div class='buttons'><button id='godel-output-close'>Close</button></div></div>

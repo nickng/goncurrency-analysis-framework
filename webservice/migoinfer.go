@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/nickng/gospal/lib/migoinfer"
 	"github.com/nickng/gospal/ssa/build"
@@ -23,13 +24,15 @@ func migoinferHandler(w http.ResponseWriter, req *http.Request) {
 	inferer := migoinfer.New(info, os.Stderr)
 	var out bytes.Buffer
 	inferer.SetOutput(&out)
+	startTime := time.Now()
 	inferer.Analyse()
+	execTime := time.Now().Sub(startTime)
 	reply := struct {
 		MiGo string `json:"MiGo"`
 		Time string `json:"time"`
 	}{
 		MiGo: out.String(),
-		Time: "0",
+		Time: execTime.String(),
 	}
 	json.NewEncoder(w).Encode(&reply)
 }

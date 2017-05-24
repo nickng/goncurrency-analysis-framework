@@ -227,7 +227,9 @@ writeTo('// Write Go code here\n'
   + '    }(ch)\n'
   + '    select {               // Select (choice)\n'
   + '    case x := <-ch:        // <b>Recv</b> value from <i>ch</i>\n'
-  + '        fmt.Println(x)\n'
+  + '        fmt.Println("case 1:", x)\n'
+  + '    case x := <-ch:\n'
+  + '        fmt.Println("case 2:", x)\n'
   + '    }\n'
   + '}\n', '#go', true);
 })()
