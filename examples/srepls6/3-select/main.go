@@ -14,8 +14,10 @@ func main() {
 	go send(ch2, 3)
 	select {
 	case x := <-ch1:
-		fmt.Println("Case x=", x, <-ch2)
+		fmt.Println("Case x=", x)
+		fmt.Println("  ch2=", <-ch2)
 	case y := <-ch2:
-		fmt.Println("Case y=", y, <-ch1)
+		fmt.Println("Case y=", y)
+		fmt.Println("  ch1=", <-ch1)
 	}
 }

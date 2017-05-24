@@ -225,11 +225,6 @@ writeTo('// Write Go code here\n'
   + '    go func(ch chan int) { // Spawn <b>goroutine</b>\n'
   + '        ch <- 42           // <b>Send</b> value to <i>ch</i>\n'
   + '    }(ch)\n'
-  + '    select {               // Select (choice)\n'
-  + '    case x := <-ch:        // <b>Recv</b> value from <i>ch</i>\n'
-  + '        fmt.Println("case 1:", x)\n'
-  + '    case x := <-ch:\n'
-  + '        fmt.Println("case 2:", x)\n'
-  + '    }\n'
+  + '    fmt.Println(<-ch)\n'
   + '}\n', '#go', true);
 })()

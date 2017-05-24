@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	fork1 := make(chan bool)
@@ -12,7 +15,7 @@ func main() {
 	go aFork(fork1)
 	go aFork(fork2)
 	go aFork(fork3)
-	//	time.Sleep(10)
+	time.Sleep(2 * time.Second)
 }
 
 func aFork(fork chan bool) {
