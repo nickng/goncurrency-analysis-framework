@@ -101,6 +101,10 @@ div#out[lang='CFSM'] + div.buttons {
   font-size: smaller;
 }
 
+div.code {
+  counter-reset: line;
+}
+
 div.code pre {
   font-family: 'Fira Mono', monospace;
   line-height: 24px;
@@ -111,6 +115,18 @@ div.code pre {
   -webkit-font-smoothing: antialiased;
   -webkit-line-break: after-white-space;
   -webkit-user-modify: read-write;
+}
+
+div.code pre:before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  color: #888;
+  min-width: 1em;
+  border-right: 1px solid #ddd;
+  text-align: right;
+  padding: 0 0.5em;
+  margin: 0 0.2em;
 }
 
 div.code pre span {
