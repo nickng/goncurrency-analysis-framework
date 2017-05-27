@@ -7,6 +7,10 @@ import (
 	"github.com/nickng/dingo-hunter/ssabuilder"
 )
 
+func initSSA() {
+	http.HandleFunc("/ssa", ssaHandler)
+}
+
 func ssaHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {

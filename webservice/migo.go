@@ -10,6 +10,10 @@ import (
 	"github.com/nickng/dingo-hunter/ssabuilder"
 )
 
+func initMigo() {
+	http.HandleFunc("/migo", migoHandler)
+}
+
 func migoHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {

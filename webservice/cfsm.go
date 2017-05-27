@@ -12,6 +12,10 @@ import (
 	"github.com/nickng/dingo-hunter/ssabuilder"
 )
 
+func initCFSMExtract() {
+	http.HandleFunc("/cfsm", cfsmHandler)
+}
+
 func cfsmHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {

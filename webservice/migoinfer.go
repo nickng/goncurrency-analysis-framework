@@ -11,6 +11,10 @@ import (
 	"github.com/nickng/gospal/ssa/build"
 )
 
+func initMigoinfer() {
+	http.HandleFunc("/infer", migoinferHandler)
+}
+
 func migoinferHandler(w http.ResponseWriter, req *http.Request) {
 	conf := build.FromReader(req.Body).Default()
 	err := req.Body.Close()

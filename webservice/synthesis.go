@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+func initSynthesis() {
+	http.HandleFunc("/synthesis", synthesisHandler)
+}
+
 func synthesisHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("Running SMC check on snippet")
 	b, err := ioutil.ReadAll(req.Body)

@@ -13,6 +13,11 @@ import (
 	"time"
 )
 
+func initGodel() {
+	http.HandleFunc("/godel", godelHandler)
+	http.HandleFunc("/godelterm", godelTermHandler)
+}
+
 func godelHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("Running Godel on snippet")
 	b, err := ioutil.ReadAll(req.Body)

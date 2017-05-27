@@ -1,21 +1,95 @@
 html, body {
+  font-family: 'Roboto', Sans-Serif;
+  font-weight: 100;
   margin: 0;
   padding: 0;
-  width: 100%;
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  background: #f3f3f3;
 }
 
-div.gocode,
-div.generated {
+div.error {
+  color: #fff;
+  background: #d9534f;
+  display: none;
+}
+
+div.overlay {
   position: relative;
 }
 
-div.gocode > div.buttons,
-div.generated > div.buttons {
+div.overlay > div.buttons {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+div.code {
+  background: #fff;
+  counter-reset: line;
+  white-space: pre;
+  border: 1px solid #375eab;
+  margin: 5px;
+  font-family: 'Source Code Pro', Monospace;
+  -webkit-font-smoothing: antialiased;
+  -webkit-line-break: after-white-space;
+  -webkit-user-modify: read-write;
+  -moz-border-radius: 5;
+  -webkit-border-radius: 5;
+  border-radius: 5px;
+}
+
+div.go {
+  background: #ffffd8 url('/static/gopher.png') no-repeat;
+  background-position: right top 20px;
+}
+
+div.code pre:before {
+  background: #efefef;
+  color: #888;
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  min-width: 2em;
+  border-right: 1px solid #ddd;
+  text-align: right;
+  padding: 0 0.5em;
+}
+
+div.code pre {
+  background: transparent;
+  font-family: 'Source Code Pro', Monospace;
+  margin: 0;
+  word-wrap: break-word;
+  line-height: 24px;
+  overflow-x: visible;
+  overflow-y: visible;
+  -webkit-font-smoothing: antialiased;
+  -webkit-line-break: after-white-space;
+  -webkit-user-modify: read-write;
+}
+
+div.code pre span {
+  white-space: pre;
+}
+
+div.code[lang]:before {
+  content: attr(lang);
+  position: absolute;
+  top: 0;
+  right: 5px;
+  background: #333;
+  padding: 10px;
+  color: #fff;
+  opacity: 0.8;
+  font-family: 'Roboto', Monospace;
+  font-weight: 400;
+  -webkit-border-bottom-left-radius: 5;
+  -moz-border-bottom-left-radius: 5;
+  border-bottom-left-radius: 5px;
+  -webkit-border-top-right-radius: 5;
+  -moz-border-top-right-radius: 5;
+  border-top-right-radius: 5px;
 }
 
 div.output {
@@ -31,6 +105,14 @@ div.output {
   bottom: 0;
   position: absolute;
 }
+
+div.output div.buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #000;
+}
+
 div#godel-wrap,
 div#synthesis-wrap,
 div#gong-wrap {
@@ -55,36 +137,9 @@ div#gong-wrap.visible {
   color: #fff;
 }
 
-div.code {
-  white-space: pre;
-  background: #eee;
-  font-family: 'Fira Mono', monospace;
-  font-weight: 400;
-  padding: 20px;
-  -webkit-font-smoothing: antialiased;
-  -webkit-line-break: after-white-space;
-  -webkit-user-modify: read-write;
-}
-
-div#go:before {
-  content: 'Go';
-}
-div#out:before {
-  content: attr(lang);
-}
-div#go:before,
-div#out[lang]:before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: #888;
+div.controls {
+  width: 100%;
   padding: 10px;
-  color: #fff;
-  opacity: 0.8;
-  font-family: 'Fira Mono', monospace;
-  -webkit-border-bottom-left-radius: 5;
-  -moz-border-bottom-left-radius: 5;
-  border-bottom-left-radius: 5px;
 }
 
 div#out:not([lang]) + div.buttons,
@@ -101,65 +156,22 @@ div#out[lang='CFSM'] + div.buttons {
   font-size: smaller;
 }
 
-div.code {
-  counter-reset: line;
-}
-
-div.code pre {
-  font-family: 'Fira Mono', monospace;
-  line-height: 24px;
-  margin: 0px 0px 0px 0px;
-  word-wrap: break-word;
-  overflow-x: visible;
-  overflow-y: visible;
-  -webkit-font-smoothing: antialiased;
-  -webkit-line-break: after-white-space;
-  -webkit-user-modify: read-write;
-}
-
-div.code pre:before {
-  counter-increment: line;
-  content: counter(line);
-  display: inline-block;
-  color: #888;
-  min-width: 1em;
-  border-right: 1px solid #ddd;
-  text-align: right;
-  padding: 0 0.5em;
-  margin: 0 0.2em;
-}
-
-div.code pre span {
-  white-space: pre;
-}
-
-div.output div.buttons {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: #000;
-}
-
-div.controls {
-  width: 100%;
-  background: #ccc;/* url(/static/logo.png) center right no-repeat;*/
-  padding: 10px 0;
-}
-
 div.buttons button,
 div.controls button,
 div.controls select {
   background: #44b6d0;
-  -webkit-border-radius: 10;
-  -moz-border-radius: 10;
-  border-radius: 10px;
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-family: 'Roboto', Sans-Serif;
   color: #ffffff;
-  padding: 5px 10px 5px 10px;
+  padding: 5px;
   text-decoration: none;
   border-style: solid;
   border-width: 2px;
   border-color: #298ba3;
-  margin: 0 10px;
+  margin: 0 5px;
+  font-size: large;
 }
 
 /* Half-buttons */
@@ -204,3 +216,70 @@ div#synthesis-graphics div#synthesis-global {
   vertical-align: middle;
 }
 
+#loader {
+  padding: 0;
+  display: none;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  display: inline-block;
+  margin-bottom: 2.5em;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+
+.loader {
+  margin-left: 4em;
+  color: #000;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}

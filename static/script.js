@@ -29,8 +29,10 @@ function writeTo(s, selector, ashtml) {
 function reportTime(t) {
   if (t!=undefined && t!=null && t!='') {
     $('#time').html('Last operation completed in '+t);
+    $('#loader').hide();
   } else {
     $('#time').html('');
+    $('#loader').show();
   }
 }
 (function(){
@@ -115,6 +117,7 @@ $('#example').on('click', function() {
       writeTo(msg, '#go', true);
       writeTo('No output.', '#out', false);
       $('#out').removeAttr('lang');
+      $('#loader').hide();
     }
   });
 });

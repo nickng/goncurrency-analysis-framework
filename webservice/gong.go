@@ -11,6 +11,10 @@ import (
 	"time"
 )
 
+func initGong() {
+	http.HandleFunc("/gong", gongHandler)
+}
+
 func gongHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("Running Gong on snippet")
 	b, err := ioutil.ReadAll(req.Body)

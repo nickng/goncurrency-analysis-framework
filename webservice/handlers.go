@@ -36,7 +36,7 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 		Title    string
 		Examples []string
 	}{
-		Title:    "Web demo tool",
+		Title:    "Go verification framework",
 		Examples: examples,
 	}
 	err = t.Execute(w, data)
@@ -45,7 +45,15 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func loadHandler(w http.ResponseWriter, req *http.Request) {
+type exampleLoader struct {
+	dir string
+}
+
+func initExampleLoader(dir string) {
+	http.HandleFunc("/load", exampleLoader{dir: dir}.loadHandler)
+}
+
+func (e exampleLoader) loadHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input").Report(w)
@@ -54,7 +62,7 @@ func loadHandler(w http.ResponseWriter, req *http.Request) {
 		NewErrInternal(err, "Cannot close request").Report(w)
 	}
 	log.Println("Load example:", string(b))
-	file, err := os.Open(path.Join(ExamplesDir, string(b), "main.go"))
+	file, err := os.Open(path.Join(e.dir, string(b), "main.go"))
 	if err != nil {
 		NewErrInternal(err, "Cannot open file").Report(w)
 	}
