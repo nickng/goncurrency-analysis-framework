@@ -59,6 +59,7 @@ $('#ssa').on('click', function() {
     async: true,
     success: function(msg) {
       writeTo(msg, '#out', false);
+      $('#loader').hide();
       $('#out').attr('lang', 'Go SSA')
     }
   });
