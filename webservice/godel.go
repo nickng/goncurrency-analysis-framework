@@ -23,24 +23,29 @@ func godelHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input MiGo types")
+		return
 	}
 	req.Body.Close()
 	file, err := ioutil.TempFile(os.TempDir(), "godel")
 	os.Chdir(os.TempDir())
 	if err != nil {
 		NewErrInternal(err, "Cannot create temp file for MiGo input").Report(w)
+		return
 	}
 	defer os.Remove(file.Name())
 
 	if _, err := file.Write(b); err != nil {
 		NewErrInternal(err, "Cannot write to temp file for MiGo input").Report(w)
+		return
 	}
 	if err := file.Close(); err != nil {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
+		return
 	}
 	Godel, err := exec.LookPath("docker")
 	if err != nil {
 		NewErrInternal(err, "Cannot find Godel executable (Check $PATH?)").Report(w)
+		return
 	}
 	startTime := time.Now()
 
@@ -67,24 +72,29 @@ func godelTermHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input MiGo types")
+		return
 	}
 	req.Body.Close()
 	file, err := ioutil.TempFile(os.TempDir(), "godel")
 	os.Chdir(os.TempDir())
 	if err != nil {
 		NewErrInternal(err, "Cannot create temp file for MiGo input").Report(w)
+		return
 	}
 	defer os.Remove(file.Name())
 
 	if _, err := file.Write(b); err != nil {
 		NewErrInternal(err, "Cannot write to temp file for MiGo input").Report(w)
+		return
 	}
 	if err := file.Close(); err != nil {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
+		return
 	}
 	Godel, err := exec.LookPath("docker")
 	if err != nil {
 		NewErrInternal(err, "Cannot find Godel executable (Check $PATH?)").Report(w)
+		return
 	}
 	startTime := time.Now()
 	file.Chdir()

@@ -20,23 +20,28 @@ func gongHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input MiGo types").Report(w)
+		return
 	}
 	req.Body.Close()
 	file, err := ioutil.TempFile(os.TempDir(), "gong")
 	if err != nil {
 		NewErrInternal(err, "Cannot create temp file for MiGo input").Report(w)
+		return
 	}
 	defer os.Remove(file.Name())
 
 	if _, err := file.Write(b); err != nil {
 		NewErrInternal(err, "Cannot write to temp file for MiGo input").Report(w)
+		return
 	}
 	if err := file.Close(); err != nil {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
+		return
 	}
 	Gong, err := exec.LookPath("Gong")
 	if err != nil {
 		NewErrInternal(err, "Cannot find Gong executable (Check $PATH?)").Report(w)
+		return
 	}
 	startTime := time.Now()
 	out, err := exec.Command(Gong, file.Name()).CombinedOutput()

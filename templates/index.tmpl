@@ -10,14 +10,13 @@
 </head>
 <body>
   <div id='error'></div>
-  <header><h1>{{ .Title }}</h1></header>
   <div class='overlay'>
     <div class='code go playground' contenteditable='true' spellcheck='false' id='go' lang='Go'></div>
   </div>
   <div class='controls'>
-    <button name='cfsm' id='cfsm'>Show CFSM</button>
-    <button name='migo' id='migo'>Show MiGoType</button>
-    <button name='migoinfer' id='migoinfer'>Show MiGo Type</button>
+    {{ if .Synthesis }}<button name='cfsm' id='cfsm'>Show CFSM</button>{{ end }}
+    {{ if .Gong      }}<button name='migov1' id='migov1'>Show MiGo Type</button>{{ end }}
+    {{ if .Godel     }}<button name='migov2' id='migov2'>Show MiGo Type</button>{{ end }}
     <button name='ssa' id='ssa'>Show SSA</button>
     {{- if .Examples -}}
     <select name='example' id='examples' class='left'>
@@ -31,18 +30,36 @@
   <div class='overlay'>
     <div class='code' id='out' spellcheck='false' contenteditable='false'>No output.</div>
     <div class='buttons'>
-        <button name='godel' id='godel'>Model check <i class="fa fa-docker"></i></button>
-        <button name='godel-term' id='godel-term'>Termination check <i class="fa fa-docker"></i></button>
-        <button name='gong' id='gong'>Run Gong</button>
-        <button name='synthesis' id='synthesis'>Run Synthesis</button>
-          <input name='chan-cfsm' id='chan-cfsm' value='1' placeholder='Chan CFSMs'/>
+        {{- if .Synthesis -}}
+            <button name='synthesis' id='synthesis'>Run Synthesis</button>
+            <input name='chan-cfsm' id='chan-cfsm' value='1' placeholder='Chan CFSMs'/>
+        {{- end -}}
+        {{- if .Gong -}}
+            <button name='gong' id='gong'>Run Gong</button>
+        {{- end -}}
+        {{- if .Godel -}}
+            <button name='godel' id='godel'>Model check <i class="fa fa-docker"></i></button>
+            <button name='godel-term' id='godel-term'>Termination check <i class="fa fa-docker"></i></button>
+        {{- end -}}
     </div>
-    <div id='gong-wrap'><div id='gong-output'></div><div class='buttons'><button id='gong-output-close'>Close</button></div></div>
-    <div id='godel-wrap'><div id='godel-output'></div><div class='buttons'><button id='godel-output-close'>Close</button></div></div>
+    {{- if .Synthesis -}}
     <div id='synthesis-wrap'><div id='synthesis-output'></div>
         <div id='synthesis-graphics'><div id='synthesis-machines'></div><div id='synthesis-global'></div></div>
         <div class='buttons'><button id='synthesis-output-close'>Close</button></div>
     </div>
+    {{- end -}}
+    {{- if .Gong -}}
+    <div id='gong-wrap'>
+        <div id='gong-output'></div>
+        <div class='buttons'><button id='gong-output-close'>Close</button></div>
+    </div>
+    {{- end -}}
+    {{- if .Godel -}}
+    <div id='godel-wrap'>
+        <div id='godel-output'></div>
+        <div class='buttons'><button id='godel-output-close'>Close</button></div>
+    </div>
+    {{- end -}}
   </div>
   <script src='/play.js'></script>
   <script src='/static/script.js'></script>

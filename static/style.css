@@ -8,10 +8,13 @@ html, body {
   background: #f3f3f3;
 }
 
-div.error {
+div#error {
   color: #fff;
   background: #d9534f;
+  font-weight: bold;
+  text-align: center;
   display: none;
+  margin: 0;
 }
 
 div.overlay {

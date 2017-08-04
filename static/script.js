@@ -25,6 +25,20 @@ function writeTo(s, selector, ashtml) {
     }
   }
 }
+function writeError(s) {
+  $('#error').empty()
+  var strs = s.split('\n');
+  for (var i=0; i<strs.length; i++) {
+    $('#error').append($('<div/>').text(strs[i]))
+  }
+  $('#time').html('');
+  $('#loader').hide();
+  $('#error').show();
+  $('#error').on('click', function(){
+    $('#error').empty();
+    $('#error').hide();
+  })
+}
 // reportTime puts t to the time div.
 function reportTime(t) {
   if (t!=undefined && t!=null && t!='') {
@@ -63,15 +77,15 @@ $('#cfsm').on('click', function() {
         reportTime(obj.time);
         $('#out').attr('lang', 'CFSM');
       } else {
-        writeTo("JSON error", '#out', false);
+        writeError("JSON error");
       }
     }
   });
 });
-$('#migo').on('click', function() {
+$('#migov1').on('click', function() {
   reportTime('');
   $.ajax({
-    url: '/migo',
+    url: '/migo.v1',
     type: 'POST',
     data: goCode(),
     async: true,
@@ -81,16 +95,18 @@ $('#migo').on('click', function() {
         writeTo(obj.MiGo, '#out', false);
         reportTime(obj.time);
         $('#out').attr('lang', 'MiGo');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#out', false);
+        writeError("JSON error");
       }
     }
   });
 });
-$('#migoinfer').on('click', function() {
+$('#migov2').on('click', function() {
   reportTime('');
   $.ajax({
-    url: '/infer',
+    url: '/migo.v2',
     type: 'POST',
     data: goCode(),
     async: true,
@@ -100,8 +116,10 @@ $('#migoinfer').on('click', function() {
         writeTo(obj.MiGo, '#out', false);
         reportTime(obj.time);
         $('#out').attr('lang', 'MiGo');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#out', false);
+        writeError("JSON error");
       }
     }
   });
@@ -137,8 +155,10 @@ $('#gong').on('click', function() {
         writeTo(obj.Gong, '#gong-output', true);
         reportTime(obj.time);
         $('#gong-wrap').addClass('visible');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#gong-output', false);
+        writeError("JSON error");
       }
     }
   });
@@ -162,8 +182,10 @@ $('#godel').on('click', function() {
         writeTo(obj.Godel, '#godel-output', true);
         reportTime(obj.time);
         $('#godel-wrap').addClass('visible');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#godel-output', false);
+        writeError("JSON error");
       }
     }
   });
@@ -184,8 +206,10 @@ $('#godel-term').on('click', function() {
         writeTo(obj.Godel, '#godel-output', true);
         reportTime(obj.time);
         $('#godel-wrap').addClass('visible');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#godel-output', false);
+        writeError("JSON error");
       }
     }
   });
@@ -211,8 +235,10 @@ $('#synthesis').on('click', function() {
         $('#synthesis-machines').html(obj.Machines)
         reportTime(obj.time);
         $('#synthesis-wrap').addClass('visible');
+      } else if (obj.Error!=null) {
+        writeError(obj.Error);
       } else {
-        writeTo("JSON error", '#synthesis-output', false);
+        writeError("JSON error");
       }
     }
   });

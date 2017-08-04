@@ -22,6 +22,7 @@ func synthesisHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input CFSM").Report(w)
+		return
 	}
 	req.Body.Close()
 	chanCFSMs := req.FormValue("chan")
@@ -31,18 +32,22 @@ func synthesisHandler(w http.ResponseWriter, req *http.Request) {
 	gmc, err := exec.LookPath("GMC")
 	if err != nil {
 		NewErrInternal(err, "Cannot find GMC executable (Check $PATH?)").Report(w)
+		return
 	}
 	bg, err := exec.LookPath("BuildGlobal")
 	if err != nil {
 		NewErrInternal(err, "Cannot find BuildGobal executable (Check $PATH?)").Report(w)
+		return
 	}
 	petrify, err := exec.LookPath("petrify")
 	if err != nil {
 		NewErrInternal(err, "Cannot find petrify executable (Check $PATH?)").Report(w)
+		return
 	}
 	dot, err := exec.LookPath("dot")
 	if err != nil {
 		NewErrInternal(err, "Cannot find dot executable (Check $PATH?)").Report(w)
+		return
 	}
 
 	// ---- Output dirs/files ----
@@ -50,18 +55,22 @@ func synthesisHandler(w http.ResponseWriter, req *http.Request) {
 	err = os.MkdirAll(baseDir, 0777)
 	if err != nil {
 		NewErrInternal(err, "Cannot create temp dir").Report(w)
+		return
 	}
 	err = os.MkdirAll(path.Join(baseDir, "outputs"), 0777)
 	if err != nil {
 		NewErrInternal(err, "Cannot create final output dir").Report(w)
+		return
 	}
 	err = os.Chdir(baseDir)
 	if err != nil {
 		NewErrInternal(err, "Cannot chdir to temp dir").Report(w)
+		return
 	}
 	file, err := ioutil.TempFile(baseDir, "cfsm")
 	if err != nil {
 		NewErrInternal(err, "Cannot create temp file for CFSM input").Report(w)
+		return
 	}
 	defer os.Remove(file.Name())
 	toPetrifyPath := path.Join(baseDir, "outputs", fmt.Sprintf("%s_toPetrify", path.Base(file.Name())))
@@ -71,9 +80,11 @@ func synthesisHandler(w http.ResponseWriter, req *http.Request) {
 
 	if _, err := file.Write(b); err != nil {
 		NewErrInternal(err, "Cannot write to temp file for CFSM input").Report(w)
+		return
 	}
 	if err := file.Close(); err != nil {
 		NewErrInternal(err, "Cannot close temp file for CFSM input").Report(w)
+		return
 	}
 
 	// Replace symbols

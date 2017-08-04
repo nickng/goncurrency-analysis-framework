@@ -1,5 +1,8 @@
 package webservice
 
+// MiGo extraction module (v1).
+// This uses dingo-hunter MiGo extraction.
+
 import (
 	"encoding/json"
 	"io/ioutil"
@@ -10,23 +13,26 @@ import (
 	"github.com/nickng/dingo-hunter/ssabuilder"
 )
 
-func initMigo() {
-	http.HandleFunc("/migo", migoHandler)
+func initMigoV1() {
+	http.HandleFunc("/migo.v1", migoV1Handler)
 }
 
-func migoHandler(w http.ResponseWriter, req *http.Request) {
+func migoV1Handler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input Go source code").Report(w)
+		return
 	}
 	req.Body.Close()
 	conf, err := ssabuilder.NewConfigFromString(string(b))
 	if err != nil {
 		NewErrInternal(err, "Cannot initialise SSA").Report(w)
+		return
 	}
 	info, err := conf.Build()
 	if err != nil {
 		NewErrInternal(err, "Cannot build SSA").Report(w)
+		return
 	}
 	extract, err := migoextract.New(info, ioutil.Discard)
 	go extract.Run()
@@ -34,6 +40,7 @@ func migoHandler(w http.ResponseWriter, req *http.Request) {
 	select {
 	case <-extract.Error:
 		NewErrInternal(err, "MiGo type inference failed").Report(w)
+		return
 	case <-extract.Done:
 		log.Println("MiGo: analysis completed in", extract.Time)
 		extract.Env.MigoProg.CleanUp()

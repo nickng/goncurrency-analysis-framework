@@ -1,10 +1,10 @@
-// +build !debug
+// +build debug
 
 package webservice
 
 import (
-	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -23,10 +23,6 @@ func (e *ErrInternal) Error() string {
 
 // Report sends internal server error to web client also logs to console.
 func (e *ErrInternal) Report(w http.ResponseWriter) {
-	err := struct {
-		Error string `json:"Error"`
-	}{
-		Error: e.Error(),
-	}
-	json.NewEncoder(w).Encode(&err)
+	http.Error(w, e.Error(), http.StatusInternalServerError)
+	log.Fatal(e)
 }

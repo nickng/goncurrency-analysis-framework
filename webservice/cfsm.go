@@ -20,15 +20,18 @@ func cfsmHandler(w http.ResponseWriter, req *http.Request) {
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		NewErrInternal(err, "Cannot read input Go source code").Report(w)
+		return
 	}
 	req.Body.Close()
 	conf, err := ssabuilder.NewConfigFromString(string(b))
 	if err != nil {
 		NewErrInternal(err, "Cannot initialise SSA").Report(w)
+		return
 	}
 	ssainfo, err := conf.Build()
 	if err != nil {
 		NewErrInternal(err, "Cannot build SSA").Report(w)
+		return
 	}
 	extract := cfsmextract.New(ssainfo, "extract", "/tmp")
 	go extract.Run()
@@ -36,6 +39,7 @@ func cfsmHandler(w http.ResponseWriter, req *http.Request) {
 	select {
 	case <-extract.Error:
 		NewErrInternal(err, "CFSM extraction failed").Report(w)
+		return
 	case <-extract.Done:
 		log.Println("CFSMs: analysis completed in", extract.Time)
 	}
