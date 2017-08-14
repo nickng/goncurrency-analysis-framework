@@ -33,6 +33,7 @@ func migoV2Handler(w http.ResponseWriter, req *http.Request) {
 	inferer := migoinfer.New(info, os.Stderr)
 	var out bytes.Buffer
 	inferer.SetOutput(&out)
+	inferer.Raw = false
 	startTime := time.Now()
 	inferer.Analyse()
 	execTime := time.Now().Sub(startTime)
