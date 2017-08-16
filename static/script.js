@@ -249,12 +249,6 @@ $('#synthesis-output-close').on('click', function() {
 })
 writeTo('// Write Go code here\n'
   + 'package main\n\n'
-  + 'import "fmt"\n\n'
   + 'func main() {\n'
-  + '    ch := make(chan int)   // Create <b>channel</b> <i>ch</i>\n'
-  + '    go func(ch chan int) { // Spawn <b>goroutine</b>\n'
-  + '        ch <- 42           // <b>Send</b> value to <i>ch</i>\n'
-  + '    }(ch)\n'
-  + '    fmt.Println(<-ch)\n'
   + '}\n', '#go', true);
 })()
