@@ -6,7 +6,7 @@ import (
 	"log"
 	"path"
 
-	"github.com/nickng/demotool/webservice"
+	"github.com/nickng/goncurrency-analysis-framework/webservice"
 )
 
 var (
@@ -24,7 +24,7 @@ var (
 	GolangUK17 webservice.Config
 )
 
-const basePkg = "github.com/nickng/demotool"
+const basePkg = "github.com/nickng/goncurrency-analysis-framework"
 
 func init() {
 	flag.StringVar(&addr, "bind", "127.0.0.1", "Bind address")
