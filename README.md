@@ -15,7 +15,7 @@ analysis with an external tool.
     - [Gong safety and liveness checker](https://github.com/nickng/gong)
     - Paper: [Fencing off Go: Liveness and Safety for Channel-based Programming](http://mrg.doc.ic.ac.uk/publications/fencing-off-go-liveness-and-safety-for-channel-based-programming/)
 - Godel Checker
-    - migoinfer
+    - [migoinfer](http://github.com/nickng/gospal)
     - Godel checker frontend
 
 ## Configuration and usage
