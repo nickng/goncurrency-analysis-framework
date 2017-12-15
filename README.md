@@ -15,8 +15,8 @@ analysis with an external tool.
     - [Gong safety and liveness checker](https://github.com/nickng/gong)
     - Paper: [Fencing off Go: Liveness and Safety for Channel-based Programming](http://mrg.doc.ic.ac.uk/publications/fencing-off-go-liveness-and-safety-for-channel-based-programming/)
 - Godel Checker
-    - [migoinfer](http://github.com/nickng/gospal)
-    - Godel checker frontend
+    - [migoinfer](http://github.com/nickng/gospal) and [godel-checker](https://bitbucket.org/MobilityReadingGroup/godel-checker)
+    - Paper: [A Static Verification Framework for Message Passing in Go using Behavioural Types](http://mrg.doc.ic.ac.uk/publications/a-static-verification-framework-for-message-passing-in-go-using-behavioural-types/)
 
 ## Configuration and usage
 
