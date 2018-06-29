@@ -20,6 +20,7 @@ func initMigoV2() {
 
 func migoV2Handler(w http.ResponseWriter, req *http.Request) {
 	conf := build.FromReader(req.Body).Default()
+	conf.AddBadPkg("math/rand", "")
 	err := req.Body.Close()
 	if err != nil {
 		NewErrInternal(err, "Cannot initialise SSA").Report(w)

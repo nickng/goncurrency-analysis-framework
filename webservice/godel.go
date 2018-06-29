@@ -2,13 +2,11 @@ package webservice
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
-	"path"
 	"strings"
 	"time"
 )
@@ -42,15 +40,15 @@ func godelHandler(w http.ResponseWriter, req *http.Request) {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
 		return
 	}
-	Godel, err := exec.LookPath("docker")
+	startTime := time.Now()
+
+	godelCmd, err := getGodelRunParams(file)
 	if err != nil {
 		NewErrInternal(err, "Cannot find Godel executable (Check $PATH?)").Report(w)
 		return
 	}
-	startTime := time.Now()
-
 	file.Chdir()
-	out, err := exec.Command(Godel, "run", "--rm", "-v", fmt.Sprintf("%s:/root", path.Dir(file.Name())), "nickng/godel:latest", "Godel", path.Base(file.Name())).CombinedOutput()
+	out, err := exec.Command(godelCmd[0], godelCmd[1:]...).CombinedOutput()
 	if err != nil {
 		log.Printf("Godel execution failed: %v\n", err)
 	}
@@ -91,14 +89,14 @@ func godelTermHandler(w http.ResponseWriter, req *http.Request) {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
 		return
 	}
-	Godel, err := exec.LookPath("docker")
+	godelCmd, err := getGodelRunParams(file)
 	if err != nil {
 		NewErrInternal(err, "Cannot find Godel executable (Check $PATH?)").Report(w)
 		return
 	}
 	startTime := time.Now()
 	file.Chdir()
-	out, err := exec.Command(Godel, "run", "--rm", "-v", fmt.Sprintf("%s:/root", path.Dir(file.Name())), "nickng/godel:latest", "Godel", "-T", path.Base(file.Name())).CombinedOutput()
+	out, err := exec.Command(godelCmd[0], godelCmd[1:]...).CombinedOutput()
 	if err != nil {
 		log.Printf("Godel execution failed: %v\n", err)
 	}
