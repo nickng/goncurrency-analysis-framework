@@ -36,7 +36,7 @@ func init() {
 	basePath := p.Dir
 	flag.StringVar(&templateDir, "templates", path.Join(basePath, "templates"), "Templates directory")
 	flag.StringVar(&staticDir, "static", path.Join(basePath, "static"), "Static files directory")
-	flag.StringVar(&examplesDir, "examples", path.Join(basePath, "examples", "srepls6"), "Examples directory")
+	flag.StringVar(&examplesDir, "examples", path.Join(basePath, "examples", "default"), "Examples directory")
 	flag.BoolVar(&enableSynthesis, "synthesis", false, "Enable CFSM synthesis")
 	flag.BoolVar(&enableGong, "gong", false, "Enable Gong verification")
 	flag.BoolVar(&enableGodel, "godel", true, "Enable Godel checker")
