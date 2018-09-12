@@ -89,7 +89,7 @@ func godelTermHandler(w http.ResponseWriter, req *http.Request) {
 		NewErrInternal(err, "Cannot close temp file for MiGo input").Report(w)
 		return
 	}
-	godelCmd, err := getGodelRunParams(file)
+	godelCmd, err := getGodelTermRunParams(file)
 	if err != nil {
 		NewErrInternal(err, "Cannot find Godel executable (Check $PATH?)").Report(w)
 		return
