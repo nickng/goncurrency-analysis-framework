@@ -4,6 +4,7 @@ import (
 	"flag"
 	"go/build"
 	"log"
+	"os"
 	"path"
 
 	"github.com/nickng/goncurrency-analysis-framework/webservice"
@@ -27,8 +28,12 @@ var (
 const basePkg = "github.com/nickng/goncurrency-analysis-framework"
 
 func init() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "6060"
+	}
 	flag.StringVar(&addr, "bind", "127.0.0.1", "Bind address")
-	flag.StringVar(&port, "port", "6060", "Listen port")
+	flag.StringVar(&port, "port", port, "Listen port")
 	p, err := build.Default.Import(basePkg, "", build.FindOnly)
 	if err != nil {
 		log.Fatal("Could not find base path")
