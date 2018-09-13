@@ -95,7 +95,8 @@ func (s *Server) Listener() net.Listener {
 	if s.listener != nil {
 		return s.listener
 	}
-	ln, err := net.Listen("tcp4", fmt.Sprintf("%s:%s", s.iface, s.port))
+	// don't use
+	ln, err := net.Listen("tcp4", net.JoinHostPort("", s.port))
 	if err != nil {
 		log.Fatal("cannot listen:", err)
 	}

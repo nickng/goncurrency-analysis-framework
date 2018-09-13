@@ -32,7 +32,7 @@ func init() {
 	if envport == "" {
 		envport = "6060"
 	}
-	flag.StringVar(&addr, "bind", "127.0.0.1", "Bind address")
+	flag.StringVar(&addr, "bind", "127.0.0.1", "WebSocket bind address")
 	flag.StringVar(&port, "port", envport, "Listen port")
 	p, err := build.Default.Import(basePkg, "", build.FindOnly)
 	if err != nil {
