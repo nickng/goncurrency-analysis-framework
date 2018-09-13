@@ -28,12 +28,12 @@ var (
 const basePkg = "github.com/nickng/goncurrency-analysis-framework"
 
 func init() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "6060"
+	envport := os.Getenv("PORT")
+	if envport == "" {
+		envport = "6060"
 	}
 	flag.StringVar(&addr, "bind", "127.0.0.1", "Bind address")
-	flag.StringVar(&port, "port", port, "Listen port")
+	flag.StringVar(&port, "port", envport, "Listen port")
 	p, err := build.Default.Import(basePkg, "", build.FindOnly)
 	if err != nil {
 		log.Fatal("Could not find base path")
